@@ -522,7 +522,7 @@ impl TfListener {
         let arc = Arc::new(buff);
         let r1 = arc.clone();
         let _subscriber_tf = rosrust::subscribe("tf", 100, move |v: TFMessage| {
-            r1.write().unwrap().handle_incoming_transforms(v, true);
+            r1.write().unwrap().handle_incoming_transforms(v, false);
         }).unwrap();
 
         let r2 = arc.clone();
