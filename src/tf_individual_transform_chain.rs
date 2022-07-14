@@ -2,9 +2,7 @@ use rosrust::{Duration, Time};
 
 use crate::{
     tf_error::TfError,
-    transforms::{
-        geometry_msgs::TransformStamped, interpolate, to_transform_stamped,
-    },
+    transforms::{geometry_msgs::TransformStamped, interpolate, to_transform_stamped},
 };
 
 fn get_nanos(dur: rosrust::Duration) -> i64 {
@@ -44,8 +42,8 @@ impl TfIndividualTransformChain {
         if let Some(newest_stamp) = self.newest_stamp() {
             if newest_stamp > Time::from_nanos(0) + self.cache_duration {
                 let time_to_keep = newest_stamp - self.cache_duration;
-                let index = binary_search_time(&self.transform_chain, time_to_keep)
-                    .unwrap_or_else(|x| x);
+                let index =
+                    binary_search_time(&self.transform_chain, time_to_keep).unwrap_or_else(|x| x);
                 self.transform_chain.drain(..index);
             }
         }
@@ -71,22 +69,12 @@ impl TfIndividualTransformChain {
                         time,
                     ));
                 }
-                let tf1 = self
-                    .transform_chain
-                    .get(x - 1)
-                    .unwrap()
-                    .clone()
-                    .transform;
+                let tf1 = self.transform_chain.get(x - 1).unwrap().clone().transform;
                 let tf2 = self.transform_chain.get(x).unwrap().clone().transform;
                 let time1 = self.transform_chain.get(x - 1).unwrap().header.stamp;
                 let time2 = self.transform_chain.get(x).unwrap().header.stamp;
                 let header = self.transform_chain.get(x).unwrap().header.clone();
-                let child_frame = self
-                    .transform_chain
-                    .get(x)
-                    .unwrap()
-                    .child_frame_id
-                    .clone();
+                let child_frame = self.transform_chain.get(x).unwrap().child_frame_id.clone();
                 let total_duration = get_nanos(time2 - time1) as f64;
                 let desired_duration = get_nanos(time - time1) as f64;
                 let weight = 1.0 - desired_duration / total_duration;
