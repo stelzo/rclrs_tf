@@ -1,0 +1,26 @@
+[package]
+name = "tf_rclrs"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+description = """
+This is a rust port of the [ROS tf library](http://wiki.ros.org/tf).
+It is intended for being used in robots to help keep track of multiple coordinate
+frames and is part of a larger suite of rust libraries that provide support for
+various robotics related functionality.
+This supports ROS2 using r2r crate.
+"""
+
+[dependencies]
+futures.workspace = true
+nalgebra.workspace = true
+rclrs = { workspace = true, version = "0.4" }
+thiserror.workspace = true
+tokio = { workspace = true, features = ["full"] }
+
+[lints]
+workspace = true
